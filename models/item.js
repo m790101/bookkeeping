@@ -9,8 +9,8 @@ const itemSchema = new Schema({
         type:Date,
         required: true
     },
-    category: {
-        type: String,
+    number: {
+        type: Number,
         require: true
     }
 })

@@ -1,0 +1,31 @@
+<section class="mt-5">
+    <a href="/new" class="btn btn-info">建立新的一筆</a>
+
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">名稱</th>
+                <th scope="col">時間</th>
+                <th scope="col">金額</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.date}}</td>
+                <td>${{this.number}}</td>
+                <td>
+
+                    <a href="">修改</a>
+                    <a href="">刪除</a>
+                </td>
+
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+
+</section>
