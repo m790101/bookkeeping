@@ -1,7 +1,7 @@
 const express = require('express')
 const port = 3000
 const exphbs = require('express-handlebars')
-const { redirect } = require('express/lib/response')
+const { redirect, render } = require('express/lib/response')
 const Item = require('./models/item')
 
 app = express()
@@ -29,6 +29,38 @@ app.post('/new', (req,res) => {
     return Item.create({name, number, date})
     .then(()=> res.redirect('/'))
     .catch(error =>console.error(error))
+})
+//view detail
+app.get('/item/:id', (req,res) => {
+    const _id = req.params.id
+    return Item.findOne({_id})
+    .lean()
+    .then((item) => res.render('detail', { item }))
+    .catch(error => console.error(error))
+})
+
+//update item page
+app.get('/item/edit/:id', (req,res) => {
+    const _id = req.params.id
+    return Item.findOne({_id})
+    .lean()
+    .then((item) => res.render('edit', { item }))
+    .catch(error => console.error(error))
+})
+
+//update item
+app.post('/item/edit/:id', (req,res) => {
+    const _id = req.params.id
+    const { name, date, number } = req.body
+    return Item.findOne({_id})
+    .then((item) => {
+        item.name = name
+        item.date = date
+        item.number = number
+        return item.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.error(error))
 })
 
 app.listen(port, ()=>{
