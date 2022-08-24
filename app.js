@@ -6,6 +6,8 @@ const Item = require('./models/item')
 const User = require('./models/user')
 const methodOverride = require('method-override')
 const session = require('express-session')
+const usePassport = require('./config/passport')
+const passport = require('passport')
 require('./config/mongoose')
 
 app = express()
@@ -20,7 +22,8 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
-  }))
+}))
+usePassport(app)
 
 app.get('/home', (req, res) => {
     return Item.find()
@@ -37,22 +40,22 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login')
 })
+//log out
+app.get('/logout', (req, res) => {
+    req.logout()
+    res.redirect('/login')
+
+})
 
 //register
 app.get('/register', (req, res) => {
     res.render('register')
 })
 
-app.post('/register', (req,res) => {
-    const {email, password, passwordConfirm} = req.body
-    if(password !== passwordConfirm) return
-    User.create({email, password})
-    .then(() => res.redirect('/login'))
-    .catch(error => console.error(error))
-
-
-
-})
+app.post('/login', passport.authenticate('local', { 
+      failureRedirect: '/login', 
+      successRedirect: '/home'
+    }))
 
 //new item page
 app.get('/new', (req, res) => {
