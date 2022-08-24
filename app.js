@@ -3,7 +3,9 @@ const port = 3000
 const exphbs = require('express-handlebars')
 const { redirect, render } = require('express/lib/response')
 const Item = require('./models/item')
+const User = require('./models/user')
 const methodOverride = require('method-override')
+const session = require('express-session')
 require('./config/mongoose')
 
 app = express()
@@ -14,13 +16,45 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
 
-app.get('/', (req, res) => {
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+  }))
+
+app.get('/home', (req, res) => {
     return Item.find()
         .lean()
         .then(items => res.render('index', { items }))
         .catch(error => console.error(error))
 })
 
+app.get('/', (req, res) => {
+    res.redirect('/login')
+})
+//login page
+
+app.get('/login', (req, res) => {
+    res.render('login')
+})
+
+//register
+app.get('/register', (req, res) => {
+    res.render('register')
+})
+
+app.post('/register', (req,res) => {
+    const {email, password, passwordConfirm} = req.body
+    if(password !== passwordConfirm) return
+    User.create({email, password})
+    .then(() => res.redirect('/login'))
+    .catch(error => console.error(error))
+
+
+
+})
+
+//new item page
 app.get('/new', (req, res) => {
     res.render('newItem')
 })
