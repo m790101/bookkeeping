@@ -1,46 +1,86 @@
 <section class="mt-5">
     <a href="/new" class="btn btn-info">建立新的一筆</a>
     <div class="d-flex">
- <div class="left-content">
- {{#if items}}
-    <table class="table mt-5">
-        <thead>
-            <tr>
-                <th scope="col">項目名稱</th>
-                <th scope="col">時間</th>
-                <th scope="col">金額</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each items}}
-            <tr >
-                <td class="align-middle"><a href="/item/{{this._id}}">{{this.name}}</a></td>
-                <td class="align-middle">{{this.date}}</td>
-                <td class="align-middle">${{this.number}}</td>
-                <td class="d-flex">
+        <div class="left-content" style="width: 50%;">
+            {{#if items}}
+            <table class="table mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">項目名稱</th>
+                        <th scope="col">時間</th>
+                        <th scope="col">金額</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each items}}
+                    <tr>
+                        <td class="align-middle"><a href="/item/{{this._id}}" class="item-name">{{this.name}}</a></td>
+                        <td class="align-middle">{{this.date}}</td>
+                        <td class="align-middle">$<span class="num">{{this.number}}</span></td>
+                        <td class="d-flex">
 
-                    <a href="/item/edit/{{ this._id }}" class="btn btn-info">修改</a>
-                    <form action="/item/{{ this._id }}?_method=DELETE" method="POST">
-                        <button class="ms-3 btn btn-danger" type="submit">刪除</buttom>
-                    </form>
+                            <a href="/item/edit/{{ this._id }}" class="btn btn-info">修改</a>
+                            <form action="/item/{{ this._id }}?_method=DELETE" method="POST">
+                                <button class="ms-3 btn btn-danger" type="submit">刪除</buttom>
+                            </form>
 
-                </td>
+                        </td>
 
-            </tr>
-            {{/each}}
+                    </tr>
+                    {{/each}}
 
-        </tbody>
-    </table>
-    {{else}}
-    <h4 class="mt-5">目前還沒有內容</h4>
-    {{/if}}
+                </tbody>
+            </table>
+            {{else}}
+            <h4 class="mt-5">目前還沒有內容</h4>
+            {{/if}}
+        </div>
+        <div class="right-content ms-5">
+            <h2>支出表格</h2>
+            <canvas id="myChart"></canvas>
+        </div>
+
     </div>
-    <div class="right-content">
-        <h2>this is right content</h2>
-    </div>
-   
-    </div>
-   
+
+
+    <script>
+        num = document.querySelectorAll('.num')
+        itemName = document.querySelectorAll('.item-name')
+        dataName = []
+        dataNum = []
+        itemName.forEach((x) => {
+            dataName.push(x.innerHTML)
+        })
+        num.forEach((x) => {
+            dataNum.push(Number(x.innerHTML))
+        })
+
+        const ctx = document.getElementById("myChart").getContext('2d')
+
+        let example = new Chart(ctx, {
+            // 參數設定[註1]
+            type: "pie", // 圖表類型
+            data: {
+                labels: dataName, // 標題
+                datasets: [{
+                    label: "# of Votes", // 標籤
+                    data: dataNum, // 資料
+                    backgroundColor:['blue'],
+                    borderWidth: 1 // 外框寬度
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                }
+
+
+            }
+        })
+
+    </script>
 
 </section>

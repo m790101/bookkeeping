@@ -14,69 +14,70 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     return Item.find()
-    .lean()
-    .then(items =>res.render('index',{items}))
-    .catch(error => console.error(error))
+        .lean()
+        .then(items => res.render('index', { items }))
+        .catch(error => console.error(error))
 })
 
-app.get('/new', (req,res) => {
+app.get('/new', (req, res) => {
     res.render('newItem')
 })
 
 //add new item
-app.post('/new', (req,res) => {
-    const{name, number, date}= req.body
+app.post('/new', (req, res) => {
+    const { name, number, date } = req.body
 
-    return Item.create({name, number, date})
-    .then(()=> res.redirect('/'))
-    .catch(error =>console.error(error))
+    return Item.create({ name, number, date })
+        .then(() => res.redirect('/'))
+        .catch(error => console.error(error))
 })
 //view detail
-app.get('/item/:id', (req,res) => {
+app.get('/item/:id', (req, res) => {
+
     const _id = req.params.id
-    return Item.findOne({_id})
-    .lean()
-    .then((item) => res.render('detail', { item }))
-    .catch(error => console.error(error))
+    return Item.findOne({ _id })
+        .lean()
+        .then((item) => res.render('detail', { item }))
+        .catch(error => console.error(error))
 })
 
 //update item page
-app.get('/item/edit/:id', (req,res) => {
+app.get('/item/edit/:id', (req, res) => {
     const _id = req.params.id
-    return Item.findOne({_id})
-    .lean()
-    .then((item) => res.render('edit', { item }))
-    .catch(error => console.error(error))
+    return Item.findOne({ _id })
+        .lean()
+        .then((item) => res.render('edit', { item }))
+        .catch(error => console.error(error))
 })
 
 //update item
-app.put('/item/:id', (req,res) => {
+app.put('/item/:id', (req, res) => {
     const _id = req.params.id
     const { name, date, number } = req.body
-    return Item.findOne({_id})
-    .then((item) => {
-        item.name = name
-        item.date = date
-        item.number = number
-        return item.save()
-    })
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
+    return Item.findOne({ _id })
+        .then((item) => {
+            item.name = name
+            item.date = date
+            item.number = number
+            return item.save()
+        })
+        .then(() => res.redirect('/'))
+        .catch(error => console.error(error))
 })
 
 //delete item
-app.delete('/item/:id/', (req,res) => {
+app.delete('/item/:id/', (req, res) => {
     const _id = req.params.id
-    return Item.findOne({_id})
-    .then((item) => {
-        return item.remove()
-    })
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
+    return Item.findOne({ _id })
+        .then((item) => {
+            return item.remove()
+        })
+        .then(() => res.redirect('/'))
+        .catch(error => console.error(error))
 })
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`app is on http://localhost:${port}`)
 })
