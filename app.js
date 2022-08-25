@@ -1,5 +1,4 @@
 const express = require('express')
-const port = 3000
 const exphbs = require('express-handlebars')
 const { redirect, render } = require('express/lib/response')
 const Item = require('./models/item')
@@ -11,6 +10,10 @@ const passport = require('passport')
 const flash = require('connect-flash')
 require('./config/mongoose')
 const routes = require('./routes')
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+  }
+  const port = process.env.PORT
 
 app = express()
 
@@ -21,7 +24,7 @@ app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
 
 app.use(session({
-    secret: 'secret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
 }))
@@ -39,5 +42,6 @@ app.use(routes)
 
 
 app.listen(port, () => {
+    console.log(process.env.PORT)
     console.log(`app is on http://localhost:${port}`)
 })
