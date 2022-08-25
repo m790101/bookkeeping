@@ -22,11 +22,12 @@ router.get('/logout', (req, res) => {
 router.get('/register', (req, res) => {
     res.render('register')
 })
-//register
 
+//register
 router.post('/register', (req,res) => {
     const errors = []
     const { email, password, passwordConfirm} = req.body
+
     if(!email|| !password || !passwordConfirm){
         errors.push({ message: '全部都是必填欄位' })
     }
@@ -42,7 +43,7 @@ router.post('/register', (req,res) => {
           passwordConfirm
         })
       }
-      User.findOne({ email }).then(user => {
+      User.findOne({ email}).then(user => {
         if (user) {
           errors.push({ message: '這個 Email 已經註冊過了。' })
           return res.render('register', {
@@ -58,9 +59,9 @@ router.post('/register', (req,res) => {
         .then((salt) => bcrypt.hash(password,salt))
         .then((hash) =>User.create({
           email,
-          password: hash
+          password: hash,
         }))
-          .then(() => res.redirect('/user/login'))
+          .then(() => res.redirect('/'))
           .catch(err => console.log(err))
       })
     
@@ -68,6 +69,7 @@ router.post('/register', (req,res) => {
 
 router.post('/login', passport.authenticate('local', { 
       failureRedirect: '/user/login', 
+      failureFlash: true,
       successRedirect: '/'
     }))
 

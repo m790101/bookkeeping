@@ -5,12 +5,18 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
-    date:{
-        type:String,
+    date: {
+        type: String,
         required: true
     },
     number: {
         type: Number,
+        require: true
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        index: true,
         require: true
     }
 })
