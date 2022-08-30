@@ -1,17 +1,17 @@
-  <div class="d-flex justify-content-center mx-auto mt-5" style="width:60%;">
+  <div class="d-flex justify-content-center mx-auto mt-5 title-section">
     <p class="me-4" style="font-size:0.75rem;">*必填欄位</p>
-    <span class="h4 me-5" >請輸入你的支出</span>
+    <span class="h4 me-5 title" >請輸入你的支出</span>
   </div>
 
-<form action="/item/new" method="POST" class="mt-5  mx-auto" style="width:40%;">
+<form action="/item/new" method="POST" class="mt-5  mx-auto form" >
 {{> message}}
-  <div class="mb-4 d-flex justify-content-center" >
+  <div class="mb-4 d-flex justify-content-center form__item-pannel" >
     <label for="name" class="form-label">名稱*：</label>
-    <input type="text" class="" id="name" name="name" style="width:250px;" value="{{name}}">
+    <input type="text" class="" id="name" name="name" value="{{name}}">
   </div>
-  <div class="mb-4 d-flex justify-content-center">
+  <div class="mb-4 d-flex justify-content-center form__item-pannel">
     <label for="category" class="form-label">類型*：</label>
-    <select name="categoryId" id="category" class="" style="width:250px;" >
+    <select name="categoryId" id="category" class=""  >
       <option value="" class="" disabled selected>select</option>
       <option value="630c4dbc4b49bd306f0ede58" {{#is categoryId '630c4dbc4b49bd306f0ede58'}}selected{{/is}}>家居物業</option>
       <option value="630c4dbc4b49bd306f0ede59" {{#is categoryId '630c4dbc4b49bd306f0ede59'}}selected{{/is}}>交通出行</option>
@@ -20,13 +20,13 @@
       <option value="630c7089235ff42a4656271c" {{#is categoryId '630c7089235ff42a4656271c'}}selected{{/is}}>其他</option>
     </select>
   </div>
-  <div class="mb-4 d-flex justify-content-center">
+  <div class="mb-4 d-flex justify-content-center form__item-pannel">
     <label for="date" class="form-label" >日期*：</label>
-    <input type="date" class="" id="date" name="date" style="width:250px;" value="{{date}}">
+    <input type="date" class="" id="date" name="date" value="{{date}}">
   </div>
-  <div class="mb-4 d-flex justify-content-center">
+  <div class="mb-4 d-flex justify-content-center form__item-pannel">
     <label for="number" class="form-label">花費*：</label>
-    <input type="number" class="" id="number" name="number" style="width:250px;" value="{{number}}">
+    <input type="number" class="" id="number" name="number"  value="{{number}}">
   </div>
   <div class="d-flex justify-content-center">
     <button type="submit" class="btn btn-outline-dark">新增支出</button>

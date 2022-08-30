@@ -23,6 +23,28 @@
     width:90%;
     margin-top:2rem;
 }
+/*form page*/
+.form{
+    width:100%;
+}
+
+#name{
+    width:50%;
+}
+#category{
+    width:50%;
+}
+#date{
+    width:50%;
+}
+#number{
+    width:50%;
+}
+.title-section{
+    width:100%;
+}
+
+
 
 @media (min-width:768px) {
 .left-content{
@@ -52,4 +74,24 @@
     display:block;
 }
 
+/*form page*/
+.title-section{
+    width:60%;
+}
+.form{
+    width:50%
+}
+#name{
+    width:50%;
+}
+#category{
+    width:50%;
+}
+
+#date{
+    width:50%;
+}
+#number{
+    width:50%;
+}
 }
