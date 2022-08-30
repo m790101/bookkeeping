@@ -1,16 +1,33 @@
-<form action="/item/{{item._id}}?_method=PUT" method="POST" class="mt-5">
-  <div class="mb-3">
-    <label for="name" class="form-label">項目名稱：</label>
-    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="{{item.name}}">
+  <div class="d-flex justify-content-center mx-auto mt-5" style="width:60%;">
+    <p class="me-4" style="font-size:0.75rem;">*必填欄位</p>
+    <span class="h4 me-5" >請修改你的支出</span>
   </div>
-  <div class="mb-3">
-    <label for="date" class="form-label">日期：</label>
-    <input type="date" class="form-control" id="date" name="date" value="{{item.date}}">
+<form action="/item/{{item._id}}?_method=PUT" method="POST" class=" mt-3 mx-auto" style="width:40%;">
+{{> message}}
+  <div class="mb-4 d-flex justify-content-center align-items-center" >
+    <label for="name" class="form-label">名稱*：</label>
+    <input type="text" class="ms-2" id="name" name="name" style="width:250px; height:40px" value="{{item.name}}">
   </div>
-  <div class="mb-3">
-    <label for="number" class="form-label">花費：</label>
-    <input type="number" class="form-control" id="number" name="number" value="{{item.number}}">
+  <div class="mb-4 d-flex justify-content-center align-items-center">
+    <label for="category" class="form-label ">類型*：</label>
+    <select name="categoryId" id="category" class="ms-2" style="width:250px; height:40px">
+      <option value="630c4dbc4b49bd306f0ede58" {{#is item.categoryId.name '家居物業'}}selected{{/is}}>家居物業</option>
+      <option value="630c4dbc4b49bd306f0ede59" {{#is item.categoryId.name '交通出行'}}selected{{/is}}>交通出行</option>
+      <option value="630c4dbc4b49bd306f0ede5a" {{#is item.categoryId.name '休閒娛樂'}}selected{{/is}}>休閒娛樂</option>
+      <option value="630c4dbc4b49bd306f0ede5b" {{#is item.categoryId.name '餐飲食品'}}selected{{/is}}>餐飲食品</option>
+      <option value="630c7089235ff42a4656271c" {{#is item.categoryId.name '其他'}}selected{{/is}}>其他</option>
+    </select>
+  </div>
+  <div class="mb-4 d-flex justify-content-center align-items-center">
+    <label for="date" class="form-label ">日期*：</label>
+    <input type="date" class="ms-2" id="date" name="date" style="width:250px; height:40px" value="{{item.date}}">
+  </div>
+  <div class="mb-4 d-flex justify-content-center align-items-center">
+    <label for="number" class="form-label">花費*：</label>
+    <input type="number" class="ms-2" id="number" name="number" style="width:250px; height:40px" value="{{item.number}}">
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <button type="submit" class="btn btn-outline-dark">送出</button>
   </div>
 
-  <button type="submit" class="btn btn-primary">送出</button>
 </form>

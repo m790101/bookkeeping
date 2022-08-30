@@ -18,6 +18,12 @@ const itemSchema = new Schema({
         ref: 'User',
         index: true,
         require: true
-    }
+    },
+    categoryId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+        index: true,
+        require: true
+    },
 })
 module.exports = mongoose.model("Item", itemSchema)

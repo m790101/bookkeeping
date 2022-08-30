@@ -10,6 +10,7 @@ const passport = require('passport')
 const flash = require('connect-flash')
 require('./config/mongoose')
 const routes = require('./routes')
+const helper =require('handlebars-helpers')()
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
   }
@@ -42,6 +43,5 @@ app.use(routes)
 
 
 app.listen(port, () => {
-    console.log(process.env.PORT)
     console.log(`app is on http://localhost:${port}`)
 })
