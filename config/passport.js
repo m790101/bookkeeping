@@ -10,20 +10,21 @@ module.exports = app => {
     app.use(passport.session())
     // 設定本地登入策略
     passport.use(new LocalStrategy({ usernameField: 'email',passReqToCallback: true}, (req, email, password, done) => {
+       
         User.findOne({ email })
             .then((user) => {
                 if (!user) {
-                    return done(null, false, req.flash('warning_msg', 'That email is not registered!'))
+                    return done(null, false, req.flash('warning_msg', '此Email還沒被註冊'))
                 }
                 bcrypt.compare(password, user.password)
                 .then(isMatch =>{
                     if (!isMatch) {
-                        return done(null, false, req.flash('warning_msg','Email or Password incorrect.'))
+                        return done(null, false, req.flash('warning_msg','Email或是密碼不正確'))
                     }
                     return done(null, user)
                 })
             })
-            .catch(err => done(err, false, {message: 'Invalid password'}))
+            .catch(err => done(err, false, {message: '密碼不正確'}))
     }))
     
 
